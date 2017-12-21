@@ -4,14 +4,7 @@ import csv
 import numpy as np
 import pandas as pd
 import itertools
-
-#const
-xsize = 30.3483
-ysize = 30.3483
-diag  = 21.5
-dr    = 1
-dt    = 1
-tmax  = 11
+import sys
 
 #get line from all files and return x and y cordinate
 def fetchLine():
@@ -81,6 +74,17 @@ def calcGr(distanses, particlesNum, times):
     return pd.Series(rd, gr)
 
 #main
+argv = sys.argv
+if len(argv) == 4:
+    xsize = 30.3483
+    ysize = 30.3483
+    diag  = 21.5
+    dr    = float(argv[1])
+    dt    = int(argv[2])
+    tmax  = int(argv[3])
+else:
+    sys.exit()
+
 print 'start file import'
 xydatas = fetchLine()
 print 'end file import'
