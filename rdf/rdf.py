@@ -1,3 +1,4 @@
+# coding: utf-8
 import glob
 import math
 import csv
@@ -6,7 +7,10 @@ import pandas as pd
 import itertools
 import sys
 
-#get line from all files and return x and y cordinate
+"""
+重心のxvgファイルからxy座標のみ取得
+各時間のxy座標を配列にして返す
+"""
 def fetchLine():
     allFiles = glob.glob('*.xvg')
     counter = 0
@@ -23,7 +27,9 @@ def fetchLine():
     rdatas = datas.reshape(datas.shape[0], datas.shape[1]/2, 2)
     return rdatas[range(1, tmax, dt),:]
 
-#get distanse between all particles of each time
+"""
+各時間における粒子間距離を計算
+"""
 def getDistance(xydatas, particlesNum):
     d = []
     i = 0
@@ -43,16 +49,18 @@ def getDistance(xydatas, particlesNum):
                 y2 = y2 - ysize
             dx = np.absolute(x1-x2)
             dy = np.absolute(y1-y2)
-            #remove periodic boundary conditions
+            #周期境界条件除去
             if float(dx)/xsize > 0.5:
                 dx = xsize - dx
             if float(dy)/ysize > 0.5:
                 dy = ysize - dy
-            #calcurate distanse
+            #距離計算
             d.append(math.sqrt(dx**2 + dy**2))
     return np.array(d).reshape(times, particlesNum**2)
 
-#calcurate rdf
+"""
+rdf計算
+"""
 def calcGr(distanses, particlesNum, times):
     allDensity = particlesNum / (math.pi * diag**2)
 
@@ -65,7 +73,7 @@ def calcGr(distanses, particlesNum, times):
         if r == 0:
             drDensity = n / (math.pi * dr**2)
         else:
-            drDensity = n / (math.pi * r**2 * dr)
+            drDensity = n / (math.pi * 2 * r * dr)
 
         gr.append(drDensity / allDensity)
         rd.append(r)
