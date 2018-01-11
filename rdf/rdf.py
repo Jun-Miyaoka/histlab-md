@@ -82,4 +82,4 @@ particlesNum = xydatas.shape[1]
 times = xydatas.shape[0]
 gr = getRdf(xydatas, particlesNum, times)
 print('end! check rdf.csv')
-# gr.to_csv("gr.csv")
+gr.to_csv("gr.csv")
