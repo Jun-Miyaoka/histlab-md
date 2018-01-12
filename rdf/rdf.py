@@ -1,10 +1,8 @@
 # coding: utf-8
 import glob
 import math
-import csv
 import numpy as np
 import pandas as pd
-import itertools
 import sys
 
 """
@@ -26,7 +24,9 @@ def fetchLine():
         print 'file number :', counter
 
     rdatas = datas.reshape(datas.shape[0], datas.shape[1]/2, 2)
-    return rdatas[range(1, tmax, dt),:]
+    print(range(t_start, t_end, dt))
+    print rdatas[range(t_start, t_end, dt),:]
+    return rdatas[range(t_start, t_end, dt),:]
 
 """
 rdf計算
@@ -66,13 +66,14 @@ def getRdf(xydatas, particlesNum, times):
 
 #main
 argv = sys.argv
-if len(argv) == 3:
+if len(argv) == 4:
     xsize = 30.0
     ysize = 30.0
     diag  = 21.6
     dr    = 0.1
-    dt    = int(argv[1])
-    tmax  = int(argv[2])
+    t_start = int(argv[1])
+    t_end   = int(argv[2])
+    dt      = int(argv[3])
 else:
     print("引数を入力してください")
     sys.exit()
@@ -81,5 +82,5 @@ xydatas = fetchLine()
 particlesNum = xydatas.shape[1]
 times = xydatas.shape[0]
 gr = getRdf(xydatas, particlesNum, times)
-print('end! check rdf.csv')
+print('end! check gr.csv')
 gr.to_csv("gr.csv")
