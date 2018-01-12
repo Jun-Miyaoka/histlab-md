@@ -24,8 +24,6 @@ def fetchLine():
         print 'file number :', counter
 
     rdatas = datas.reshape(datas.shape[0], datas.shape[1]/2, 2)
-    print(range(t_start, t_end, dt))
-    print rdatas[range(t_start, t_end, dt),:]
     return rdatas[range(t_start, t_end, dt),:]
 
 """
