@@ -7,6 +7,7 @@ from collections import OrderedDict
 #check lipid type from system.top data
 def lipid_type(filenum):
     lipids = {"PPC": 192, "PPS": 256, "DPPC": 320, "PGPC": 448, "PIPC": 640, "POPC": 832, "PUPC": 896, "DOPE": 960, "PAPE": 1088, "PIPE": 1152, "PRPE": 1344, "PAPI": 1408, "PAPS": 1536, "PRPS": 1728, "BNSM": 1856, "DBSM": 2048, "DPSM": 2240, "DXSM": 2304, "CHOL": 4096}
+    lipids = {"PPC": 192, "PPS": 256, "DOPC": 320, "PGPC": 512, "PIPC": 768, "POPC": 960, "PRPC": 1024, "DIPE": 1088, "PAPE": 1216, "PRPE": 1280, "PAPI": 1408, "PAPS": 1600, "PRPS": 1728, "BNSM": 1792, "DBSM": 1856, "DPSM": 1984, "DXSM": 2048, "CHOL": 4096}
     lipids = OrderedDict(sorted(lipids.items(), key=lambda x:x[1]))
 
     for lipid, lipidnum in lipids.items():
@@ -25,12 +26,12 @@ def getZaxis(fileName):
     return float(zaxis)
 
 #main
-for filenum in range(3,4097):
+for filenum in range(1,4097):
     xvgfile = "r_"+str(filenum)+".xvg"
 
     zaxis = getZaxis(xvgfile)
     lipidType = lipid_type(filenum)
-    lipidSide = "upper" if zaxis >= 6.10201 else "lower"
+    lipidSide = "upper" if zaxis >= 6.12605 else "lower"
     nextpath = lipidSide+"/"+lipidType
 
     if not os.path.isdir(nextpath):
